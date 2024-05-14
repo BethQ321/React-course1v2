@@ -1,26 +1,30 @@
 import './App.css';
-import { useState, useEffect } from "react";
+import { useRef } from "react";
 
 function App() {
-  const [emotion, setEmotion] = useState("happy");
-  const [secondary, setSecondary] = useState("tired");
+  const txtTitle = useRef();
+  const hexColor = useRef();
 
-  useEffect(() => {
-    console.log(`It's ${emotion} right now`);
-  }, [emotion]);
-
-  
-
+  console.log(txtTitle);
+  const submit = (e) => {
+    e.preventDefault();
+    const title = txtTitle.current.value;
+    const color = hexColor.current.value;
+    alert(`${title}, ${color}`);
+    txtTitle.current.value = "";
+    hexColor.current.value = "";
+  };
+ 
   return (
-    <div className="App">
-      <h1>Current emotion is {emotion}</h1>
-      <button onClick={() => setEmotion("sad")}>Sad</button>
-      <button onClick={() => setEmotion("excited")}>Excited</button>
-      <button onClick={() => setEmotion("angry")}>Angry</button>
-
-      <h2>Current secondary emotion is {secondary}</h2>
-      <button onClick={() => setSecondary("grateful")}>Grateful</button>
-    </div>
+    <form onSubmit={submit}>
+      <input 
+        ref={txtTitle}
+        type="text"
+        placeholder="color title..."
+      />
+      <input ref={hexColor} type="color" />
+      <button>ADD</button>
+    </form>
   );
 }
 
